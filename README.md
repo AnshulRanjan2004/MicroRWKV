@@ -5,7 +5,7 @@ This is a custom architecture for the nanoRWKV project from [RWKV-v4neo](https:/
 
 This is RWKV "x051a" which does not require custom CUDA kernel to train, so it works for any GPU / CPU.
 
-![nanoGPT](assets/nanoRWKV.jpg)
+![nanoGPT](assets/nanoRWKV.png)
 
 > The [nanoGPT](https://github.com/karpathy/nanoGPT)-style implementation of [RWKV Language Model](https://www.rwkv.com) - an RNN with GPT-level LLM performance.
 
