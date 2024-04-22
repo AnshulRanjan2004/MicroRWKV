@@ -9,7 +9,7 @@ This is RWKV "x051a" which does not require custom CUDA kernel to train, so it w
 
 > The [nanoGPT](https://github.com/karpathy/nanoGPT)-style implementation of [RWKV Language Model](https://www.rwkv.com) - an RNN with GPT-level LLM performance.
 
-Dataset used - ![TinyStories](https://arxiv.org/abs/2305.07759)
+Dataset used - [TinyStories](https://arxiv.org/abs/2305.07759)
 
 ![nanoGPT](assets/current_loss.png)
 
