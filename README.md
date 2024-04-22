@@ -1,5 +1,18 @@
 # MicroRWKV
-This is a custom architecture for the nanoRWKV project from [here](https://github.com/BlinkDL/nanoRWKV). The architecture is based on the original nanoRWKV architecture, but with some modifications.
+This is a custom architecture for the nanoRWKV project from [RWKV-v4neo](https://github.com/BlinkDL/RWKV-LM/tree/main/RWKV-v4neo). The architecture is based on the original nanoRWKV architecture, but with some modifications.
+
+![nanoGPT](assets/nanorwkv.jpg)
+
+> The [nanoGPT](https://github.com/karpathy/nanoGPT)-style implementation of [RWKV Language Model](https://www.rwkv.com) - an RNN with GPT-level LLM performance.
+
+![nanoGPT](assets/current_loss.png)
+
+RWKV is essentially an RNN with unrivaled advantage when doing inference. Here we benchmark the speed and space occupation of RWKV, along with its Transformer counterpart (code could be found [here](https://github.com/Hannibal046/nanoRWKV/blob/main/benchmark_inference_time.py)). We could easily find:
+- single token generation latency of RWKV is an constant.
+- overall latency of RWKV is linear with respect to context length.
+- overall memory occupation of RWKV is an constant.
+
+![benchmark](assets/benchmark.png)
 
 ## Model Structure
 RWKV_TimeMix -> RWKV_ChannelMix -> Sliding Window Attention -> GroupedQAttention -> TinyMoE
