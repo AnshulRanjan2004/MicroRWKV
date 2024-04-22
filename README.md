@@ -5,9 +5,11 @@ This is a custom architecture for the nanoRWKV project from [RWKV-v4neo](https:/
 
 > The [nanoGPT](https://github.com/karpathy/nanoGPT)-style implementation of [RWKV Language Model](https://www.rwkv.com) - an RNN with GPT-level LLM performance.
 
+Dataset used - ![TinyStories](https://arxiv.org/abs/2305.07759)
+
 ![nanoGPT](assets/current_loss.png)
 
-RWKV is essentially an RNN with unrivaled advantage when doing inference. Here we benchmark the speed and space occupation of RWKV, along with its Transformer counterpart (code could be found [here](https://github.com/Hannibal046/nanoRWKV/blob/main/benchmark_inference_time.py)). We could easily find:
+RWKV is essentially an RNN with unrivaled advantage when doing inference. Here we benchmark the speed and space occupation of RWKV, along with its Transformer counterpart (code could be found [here](https://github.com/AnshulRanjan2004/MicroRWKV/blob/main/benchmark_inference_time.py)). We could easily find:
 - single token generation latency of RWKV is an constant.
 - overall latency of RWKV is linear with respect to context length.
 - overall memory occupation of RWKV is an constant.
