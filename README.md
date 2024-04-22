@@ -1,7 +1,11 @@
 # MicroRWKV
 This is a custom architecture for the nanoRWKV project from [RWKV-v4neo](https://github.com/BlinkDL/RWKV-LM/tree/main/RWKV-v4neo). The architecture is based on the original nanoRWKV architecture, but with some modifications.
 
-![nanoGPT](assets/nanorwkv.jpg)
+![nanoRWKV](assets/nanoRWKV-loss.png)
+
+This is RWKV "x051a" which does not require custom CUDA kernel to train, so it works for any GPU / CPU.
+
+![nanoGPT](assets/nanoRWKV.jpg)
 
 > The [nanoGPT](https://github.com/karpathy/nanoGPT)-style implementation of [RWKV Language Model](https://www.rwkv.com) - an RNN with GPT-level LLM performance.
 
