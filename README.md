@@ -14,6 +14,14 @@ RWKV is essentially an RNN with unrivaled advantage when doing inference. Here w
 
 ![benchmark](assets/benchmark.png)
 
+## Prerequisites
+Before kicking off this project, make sure you are familiar with the following concepts:
+- **RNN**: RNN stands for Recurrent Neural Network. It is a type of artificial neural network designed to work with sequential data or time-series data. Check this [tutorial](http://karpathy.github.io/2015/05/21/rnn-effectiveness/) about RNN.
+- **Transformer**: A Transformer is a type of deep learning model introduced in the paper [Attention is All You Need](https://arxiv.org/abs/1706.03762). It is specifically designed for handling sequential data, like natural language processing tasks, by using a mechanism called self-attention. Check this [post](http://jalammar.github.io/illustrated-transformer/) to know more about Transformer.
+- **LLM**: LLM, short for Large Language Model, has taken the world by storm. Check this [Awesome-LLM repo](https://github.com/Hannibal046/Awesome-LLM) and [State of GPT](https://build.microsoft.com/en-US/sessions/db3f4859-cd30-4445-a0cd-553c3304f8e2).
+- **nanoGPT**: the simplest, fastest repository for training/finetuning medium-sized GPTs by great [Andrej Karpathy](https://karpathy.ai). Here you could find the [code](https://github.com/karpathy/nanoGPT) and the [teaching video](https://www.youtube.com/watch?v=kCc8FmEb1nY).
+- **RWKV Language Model**: an RNN with GPT-level LLM performance, which can also be directly trained like a GPT transformer (parallelizable). The model is created by an independent researcher [Bo Peng](https://twitter.com/BlinkDL_AI). Get more information [here](https://www.rwkv.com).
+
 ## Model Structure
 RWKV_TimeMix -> RWKV_ChannelMix -> Sliding Window Attention -> GroupedQAttention -> TinyMoE
 
@@ -31,10 +39,16 @@ It uses several learnable parameters, such as `time_maa_k`, `time_maa_v`, `time_
 The module also applies a time-decay mechanism using the time_decay parameter, which allows the model to give more importance to recent inputs.
 The output of this module is then passed through a series of linear layers, including the receptance, key, value, and gate layers.
 
+### Time Mixing
+![](assets/time_mixing.gif)
+
 2. RWKV_ChannelMix:
 This module performs a channel-based mixing operation on the input, allowing the model to learn better representations across different feature channels.
 It uses a time-shift operation and learnable parameters, such as `time_maa_k` and `time_maa_r`, to control the mixing process.
 The module applies a key, value, and receptance linear layers to the mixed input, and the output is then passed through a sigmoid activation function.
+
+### Channel Mixing
+![](assets/channel_mixing.gif)
 
 3. Sliding Window Attention:
 This attention mechanism operates on a sliding window of the input, enabling the model to efficiently capture both local and global dependencies.
@@ -76,6 +90,29 @@ Lily picked up a hay and proudly went to a small portion. She was very happened.
 
 Generated text length: 227 | Inference time: 3 seconds
 
+We got the results as follows (check this [wandb project](https://wandb.ai/hannibal046/nanoRWKV?workspace=user-hannibal046)):
+
+| model | params | train loss | val loss |
+| ----- | ------ | ---------- | -------- |
+| GPT-2 | 124M   |  2.82      |  2.86    |
+| RWKV  | 130M   |  2.85      |  2.88    |
+
+
+### baselines
+
+Existing OpenAI GPT-2 checkpoints and RWKV checkpoints allow us to get some baselines in place for openwebtext. We can get the numbers as follows:
+```
+python train.py config/eval_rwkv4_{169m|430m|1b5|3b|7b|14b}.py
+python train.py config/eval_gpt2{|_medium|_large|_xl}.py
+```
+and observe the following losses on val set:
+|    model   | RWKV |      |      |      |      |      | GPT-2 |      |      |      |
+|:----------:|:----:|:----:|:----:|:----:|------|------|:-----:|:----:|:----:|:----:|
+| parameters | 169M | 430M | 1.5B |  3B  | 7B   | 14B  |  124M | 350M | 774M | 1.5B |
+|  val loss  | 3.11 | 2.79 | 2.54 | 2.42 | 2.32 | 2.23 |  3.11 | 2.82 | 2.66 | 2.56 |
+
+Notice that both models are not trained in the openwebtext (RWKV in The Pile and OpenAI GPT-2 in private WebText), so they could be further improved due to dataset domain gap.
+
 ## Dependencies
 - torch
 - numpy
@@ -83,3 +120,15 @@ Generated text length: 227 | Inference time: 3 seconds
 
 ## Conclusion
 The MicroRWKV model is a custom neural network architecture that combines several cutting-edge techniques, such as time-based and channel-based mixing, sliding window attention, grouped attention, and a Tiny Mixture of Experts (TinyMoE) layer. These components work together to enhance the model's ability to capture both local and global dependencies, as well as to learn specialized representations. The combination of these techniques results in a powerful and efficient model that can be used for a variety of natural language processing tasks.
+
+## Reference
+Here are some useful references (offering my sincerest gratitude):
+- [RWKV: Reinventing RNNs for the Transformer Era](https://arxiv.org/abs/2305.13048) - the paper
+- [How the RWKV language model works](https://johanwind.github.io/2023/03/23/rwkv_details.html) - a great blog post by [Johan Sokrates Wind](https://www.mn.uio.no/math/english/people/aca/johanswi/index.html).
+- [Investigating the RWKV Language Model](https://ben.bolte.cc/rwkv-model) - a great post by [Ben Bolte](https://ben.bolte.cc)
+- [An Attention Free Transformer](https://arxiv.org/abs/2105.14103) - a paper from Apple that inspires RWKV.
+- [RWKV-in-150-lines](https://github.com/BlinkDL/ChatRWKV/blob/main/RWKV_in_150_lines.py)
+- [nanoT5](https://github.com/PiotrNawrot/nanoT5) - a follow-up of nanoGPT for T5 model
+- [有了Transformer框架后是不是RNN完全可以废弃了？](https://www.zhihu.com/question/302392659/answer/2954997969) - a great answer by [Songlin Yang](https://sustcsonglin.github.io)
+- [RWKV的RNN CNN二象性](https://zhuanlan.zhihu.com/p/614311961) - a great zhihu post by [Songlin Yang](https://sustcsonglin.github.io)
+- [Google新作试图“复活”RNN：RNN能否再次辉煌？](https://kexue.fm/archives/9554) - a great blog post by [苏剑林](https://kexue.fm/me.html)
