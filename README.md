@@ -92,7 +92,11 @@ Lily picked up a hay and proudly went to a small portion. She was very happened.
 
 Generated text length: 227 | Inference time: 3 seconds
 
-We got the results as follows (check this [wandb project](https://wandb.ai/hannibal046/nanoRWKV?workspace=user-hannibal046)):
+We got the results as follows 
+
+![](https://github.com/AnshulRanjan2004/MicroRWKV/assets/91585064/0dfb4bc1-843a-4c99-9d9f-eda5a0d5c110)
+
+![image](https://github.com/AnshulRanjan2004/MicroRWKV/assets/91585064/8b276bc2-93a2-4295-9449-8b7fbc90afcf)
 
 | model | params | train loss | val loss |
 | ----- | ------ | ---------- | -------- |
