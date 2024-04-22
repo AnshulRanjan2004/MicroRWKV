@@ -133,6 +133,7 @@ The MicroRWKV model is a custom neural network architecture that combines severa
 
 ## Reference
 Here are some useful references (offering my sincerest gratitude):
+- [nanoGPT](https://github.com/karpathy/nanoGPT) - The original nanoGPT implementation by [Andrej Karpathy]
 - [RWKV: Reinventing RNNs for the Transformer Era](https://arxiv.org/abs/2305.13048) - the paper
 - [How the RWKV language model works](https://johanwind.github.io/2023/03/23/rwkv_details.html) - a great blog post by [Johan Sokrates Wind](https://www.mn.uio.no/math/english/people/aca/johanswi/index.html).
 - [Investigating the RWKV Language Model](https://ben.bolte.cc/rwkv-model) - a great post by [Ben Bolte](https://ben.bolte.cc)
